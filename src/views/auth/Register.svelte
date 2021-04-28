@@ -16,7 +16,9 @@
     const formData = new FormData(form);    
     const res = await postMember(formData);      
     
-    console.log(formData);
+     for (let key of formData.keys()){
+     console.log(key, formData.get(key));
+    }
 
     if(res.error)
      _setError(res.error)     
