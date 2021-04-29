@@ -6,10 +6,6 @@
     document.getElementById('error').textContent = message;  
   }  
 
-  function agree() {
-    const agree = document.getElementById('checkAgree').checked;      
-    agree ?  register(): _setError('you need to agree prior registration')     
-  }  
 
   async function register() {
     const form = document.querySelector('form');
@@ -25,6 +21,7 @@
     else if(res.data)      
       navigate("/", { replace: true }) 
   }  
+  
 </script>      
 <div class="container mx-auto px-4 h-full">
   <div class="flex content-center items-center justify-center h-full">

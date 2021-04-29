@@ -21,6 +21,8 @@ final class Member extends Main {
 
 	// post module add
 	public function post_add(\Base $f3, array $args = []) {				
+	
+	
 		$fullname = $f3->get('POST.fullname');		
 		$names  = explode(" ", $fullname);			
 		$people = new \model\People();		

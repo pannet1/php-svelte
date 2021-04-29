@@ -6,6 +6,7 @@
 
   import { onMount } from "svelte";
   import { getMemberList } from "../../services/kkk";
+  import { ts2dt} from "../../services/utils";
 
   let members;
 
@@ -15,12 +16,6 @@
     members = res.data;        
   });
 
-  function ts2dt(ts) {        
-    const date = new Date(ts);    
-    return (date.getDate()+
-          "/"+(date.getMonth()+1)+
-          "/"+date.getFullYear());    
-  }
  
   // can be one of light or dark
   let color = "light";

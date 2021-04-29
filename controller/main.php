@@ -26,7 +26,7 @@ abstract class Main {
 			{				
 				$data = array(
 				"status" => false,
-            	"data"   => null,
+       	"data"   => null,
 				"error"  =>	$f3->get('error.'.$key)
 			);														
 			}

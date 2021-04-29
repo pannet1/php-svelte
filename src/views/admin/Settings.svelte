@@ -2,7 +2,8 @@
   // core components  
   import { onMount } from "svelte";
   import { getMember, postAddr } from "../../services/kkk";
-
+  import {ts2dt } from "../../services/utils";
+  
   import { link, navigate  } from "svelte-routing";   
   const team2 = "/assets/img/team-1-800x800.jpg";         
   let member;  
@@ -51,14 +52,6 @@ function _setError(message) {
     console.log("something bad happened")    
 }
 
-function fd2json(fd) {
-    let obj = {};
-    for (let key of fd.keys()) {
-      obj[key] = fd.get(key);
-    }
-    return JSON.stringify(obj);
-    }
-
 
 </script>
 
@@ -81,7 +74,7 @@ function fd2json(fd) {
 
   <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
     <form id="formElem">
-              {#if member}
+      {#if member}
       <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
         Address
       </h6>
@@ -163,7 +156,7 @@ function fd2json(fd) {
               name="postal_code"
               type="text"
               class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-              value=''
+              value={member.postal_code}
             />
           </div>
         </div>
@@ -222,11 +215,11 @@ function fd2json(fd) {
               About me
             </label>
             <textarea
-              value="hard coded notes"
               name="notes"
               type="text"
               class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-              rows="4"></textarea>
+              rows="4"
+              value={member.notes}></textarea>
           </div>
         </div>
       </div>
@@ -235,6 +228,7 @@ function fd2json(fd) {
       <input
         class="bg-red-400 text-white active:bg-red-500 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
         type="submit" 
+        value="save"
       />
       {/if}
     </form>
@@ -274,7 +268,7 @@ class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl
     </div>
     <div class="mb-2 text-blueGray-600 mt-0">
       <i class="fas fa-clock mr-2 text-lg text-blueGray-400"></i>
-      {member.join_date}
+      { ts2dt(member.join_date) }
     </div>    
   </div>
   
