@@ -1,5 +1,5 @@
 # php-svelte
-This is a project where we use Fatfree framework for API server and Svelte for client side views.
+A demonstation of using fatfree framework for the API server and svelte for the client.
 
 ## API standard
 
