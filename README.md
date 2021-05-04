@@ -2,11 +2,13 @@
 This is a project where we use Fatfree framework for API server and Svelte for client side views.
 
 ## API standard
-GET /baseuri/classname
-get all items
 
-POST /baseuri/classname
+get all items
+"GET /baseuri/classname"
+
 post new item
+"POST /baseuri/classname"
+
 
 GET /baseuri/classname/new
 get item form
