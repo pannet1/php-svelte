@@ -17,23 +17,15 @@ abstract class Main {
 		$f3->set('db',$db);		
 		
 		$this->validation = \Validation::instance();		
-		$this->validation->onError(function($text,$key) {	
+        $this->validation->onError(function($text,$key) {	
 			// f3 not available in this context ?
-			$f3 = \Base::instance();
-			// extract custom error from 'en' lang to hive			
-			
-			if(isset($key)) 
-			{				
-				$data = array(
-				"status" => false,
-       	"data"   => null,
-				"error"  =>	$f3->get('error.'.$key)
-			);														
-			}
-			\View\JSON::instance()->serve($data); 																											
-		});		
-  	
-	}
+            $f3 = \Base::instance();
+			// extract custom error from 'en' lang to hive			            
+			$msg  = $f3->get('error.'.$key);                         
+			if(isset($msg)) 
+				$f3->set('msg',$msg);            
+        });        
+    }
 
 	/**
 	 * This will be called before a route is executed. Return false to deny the request

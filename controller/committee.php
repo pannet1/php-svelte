@@ -12,13 +12,12 @@ final class Committee extends Main {
 		$sql  = "SELECT * FROM ".$args['module']." ";
 		$sql .= "ORDER BY id DESC ";
 		$data = $this->mapper->get_all($sql);				
-		\View\Api::success($data);
+		\View\JSON::instance()->serve($data);
 	}
 
 	// post module add
 	public function post_add(\Base $f3, array $args = []) {	
-		$this->mapper->post_add($f3, $filter) ?
-		\View\Api::success() : \View\Api::error();		
+		
 	}	
 
 	// GET module/new form 

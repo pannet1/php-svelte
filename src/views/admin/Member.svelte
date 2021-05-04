@@ -13,7 +13,7 @@
   // Get the data from the api, after the page is mounted.
    onMount(async () => {
     const res = await getMemberList();
-    members = res.data;        
+    members = res;        
   });
 
  

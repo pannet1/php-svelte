@@ -2,7 +2,6 @@
 // Implementations for all the calls for the pokemon endpoints.
 import Api from "../services/Api";
 
-// Method to get a list of all Members
 export const getTest = async () => {
   try {
     const response = await Api.get("/mst_sex");
@@ -36,7 +35,7 @@ export const postMember = async (postData) => {
 export const getMember = async (id) => {
   try {
     const response = await Api.get("/member/"+id);
-    return response.data;
+    return response;
   } catch (error) {
     console.error(error);
   }
