@@ -9,48 +9,7 @@ class Query extends \DB\SQL\Mapper {
 
     public function get_all(string $sql = '') {		
        return $this->db->exec($sql);
-    }
-
-	public function post_add (\Base $f3, array $filter = [] ) {	
-		$this->copyFrom('POST', $filter);
-		$this->save();			
-		return true;	
-	}
-
-	public function put_update($id, array $filter = [] ) {
-		$this->load(["id=?, $id"]);
-		if(!$this->dry()) {
-			$this->copyFrom('POST', $filter);
-			$this->update();				
-			return true;
-		}		
-		return false;
-	}
-
-	public function findById (\Base $f3, array $filter = [] ) {			
-		$mapper = $this->find(["id=?, $id"]);
-		if($mapper !=null) {
-			$mapper->copyTo('POST');
-			return true;			
-		}
-		return false;
-	}
-
-	public function delete ($id ) {			
-		$mapper = $this->find(["id=?, $id"]);
-		$mapper->delete();
-		return true;
-	}
-
-
-	public function get_one($id) {				
-		$mapper = $this->find(["id=?, $id"]);
-		if($mapper !=null) {
-			$mapper->copyTo('POST');
-			return true;			
-		}
-		return false;	
-	}
+    }	
 
 	public function paging() {
          // PAGINATION BEGIN		

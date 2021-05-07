@@ -10,8 +10,8 @@ final class Member extends Main {
 	
 	// get module all  	
 	public function get_all(\Base $f3, array $args = []) {				
-		$sql  = "SELECT member.id, member.join_date, member.status_id, ";
-		$sql .= "people.first, people.middle, people.last, people.email ";
+		$sql  = "SELECT member.id, member.join_date, member.status_id, member.email, ";
+		$sql .= "people.first, people.middle, people.last ";
 		$sql .= "FROM member, people ";
 		$sql .= "WHERE member.people_id=people.id ";
 		$sql .= "ORDER BY member.id DESC ";
@@ -69,8 +69,8 @@ final class Member extends Main {
 	public function get_one(\Base $f3, array $args = []) {	
 		$id = $args['id'];		
         if(isset($id)) {
-           $sql  = "SELECT member.id, member.join_date, member.people_id, member.ref1, member.ref2, member.notes, member.type_id, member.notes, ";  
-           $sql .= "people.first, people.middle, people.last, people.email  "; 
+           $sql  = "SELECT member.id, member.join_date, member.people_id, member.ref1, member.ref2, member.notes, member.type_id, member.notes, member.email, ";  
+           $sql .= "people.first, people.middle, people.last "; 
            $sql .= "FROM member, people ";                                    
            $sql .= "WHERE member.id=$id ";
            $sql .= "AND member.people_id=people.id ";
@@ -82,7 +82,7 @@ final class Member extends Main {
            $sql .= "WHERE addr.people_id=$people_id";              
            $dat2 = $this->mapper->get_all($sql);                              
            $data = array_merge_recursive($dat1[0], $dat2[0]);
-           \View\JSON::instance()->serve($data);
+		   \View\JSON::instance()->serve($data);
 		}			
 	}	
 }

@@ -7,7 +7,7 @@ class Addr extends \DB\Cortex {
     'people_id' => [ array(
         'has_one' => array('\model\People::class','id')
         )],
-        'addr_1' => [
+        'addr1' => [
         'type' => 'VARCHAR50',        
         'nullable' => false,        
         'filter' => 'trim',     
@@ -27,6 +27,6 @@ class Addr extends \DB\Cortex {
     ],             
 ],
     $db = 'db',     
-    $table = 'member',
+    $table = 'addr',
     $primary = 'id';        
 } 
