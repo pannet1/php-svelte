@@ -28,22 +28,29 @@ final class Member extends Main {
 		$people->title_id = 1;		
 		$people->first  = $names[0]; 
 		$people->middle = $names[1]; 
-		$people->last   = $names[2]; 
-		$people->email  = $f3->get('POST.email');		
-		$people->sex_id = $f3->get('POST.sex_id');
+		$people->last   = $names[2]; 		
+		$people->sex_id = $f3->get('POST.sex_id');		
 		$many = $this->validation->validateCortexMapper($people);		
 		$member = new \model\Member();		
+		$member->email  = $f3->get('POST.email');		
+		$member->pass = $f3->get('POST.password');
 		$member->type_id = 1;
 		$one = $this->validation->validateCortexMapper($member);					
 		 if($many && $one) {
 			$people->save();
-			$member->people_id = $people->id;
+			$member->people_id = $people->id;						
+			$member->pass = password_hash($f3->get('POST.password'), PASSWORD_DEFAULT);
+			$member->token = password_hash($f3->get('POST.email'),PASSWORD_DEFAULT);			
 			$member->save();            
             \View\JSON::instance()->serve("success"); 		
          } else {
-			$msg = $f3->get('error.msg');
+			$msg = $f3->get('msg');
+			if(!$msg)
+				$msg = "some strange error occured";
 			\View\JSON::instance()->error($msg);
 		 }
+
+
 	}	
 
 	// GET module/new form 

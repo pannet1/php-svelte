@@ -9,12 +9,6 @@ class People extends \DB\Cortex {
         'nullable' => false,
         'filter' => 'trim',    
         'validate'=> 'required|integer',
-    ],  
-    'email' => [
-        'type' => 'VARCHAR50',        
-        'nullable' => false,
-        'filter' => 'trim',        
-        'validate'=> 'required|valid_email', 
     ],                
     'first' => [
         'type' => 'VARCHAR25',        
