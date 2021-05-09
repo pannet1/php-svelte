@@ -5,8 +5,7 @@
   function _setError(message) {
     document.getElementById('error').textContent = message;  
   }  
-
-
+  
   async function register() {
     const form = document.querySelector('form');
     const formData = new FormData(form);    

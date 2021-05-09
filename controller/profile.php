@@ -1,11 +1,11 @@
 <?php
 namespace controller;
 
-final class Addr extends Main {	
+final class Profile extends Main {	
 
 	public function beforeroute(\Base $f3, array $args = []){		
 		$f3->title = $args['module'];								        		
-		$this->mapper = new \model\Query($f3->get('db'), $args['module']);		
+		$this->mapper = new \model\Query($f3->get('db'), 'addr');		
 	}	
 
     public function post_add(\Base $f3, array $args = []) {

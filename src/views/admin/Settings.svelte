@@ -1,7 +1,7 @@
 <script>
   // core components  
   import { onMount } from "svelte";
-  import { getMember, postAddr } from "../../services/kkk";
+  import { getMember, postProfile } from "../../services/kkk";
   import {ts2dt } from "../../services/utils";
   
   import { link, navigate  } from "svelte-routing";   
@@ -29,7 +29,7 @@
       
       // i want await here
       // const res = await postAddr(fd)
-      const res = postAddr(fd)
+      const res = postProfile(fd)
       
       if(res.error)
        _setError(res.error)

@@ -53,17 +53,6 @@ final class Member extends Main {
 
 	}	
 
-	// GET module/new form 
-	public function get_new(\Base $f3, array $args = []) {		
-		$f3->heading = 'Create';		
-		$f3->set('content', 'form.htm');		
-		echo \Template::instance()->render($f3->AJAX ? $f3->content : 'layout.htm'); 
-	}		
-
-	// PUT module/@id update
-	public function put_update(\Base $f3, array $args = []) {			
-		
-	}	
 
 	// GET module/@id ONE
 	public function get_one(\Base $f3, array $args = []) {	

@@ -1,5 +1,26 @@
 <script>
-  import { link } from "svelte-routing";
+  import { link, navigate } from "svelte-routing";   
+  import { postAuthLogin } from "../../services/kkk"; 
+   
+  function _setError(message) {
+    console.log(message)
+  }  
+
+  async function submit() {
+    const form = document.querySelector('form');
+    const formData = new FormData(form);    
+    const res = await postAuthLogin(formData);      
+    
+     for (let key of formData.keys()){
+     console.log(key, formData.get(key));
+    }
+
+    if(res.error)
+     _setError(res.error)     
+    else if(res.data)      
+      navigate("/", { replace: true }) 
+  }  
+
 </script>  
 
 <div class="container mx-auto px-4 h-full">
@@ -22,12 +43,12 @@
             <div class="relative w-full mb-3">
               <label
                 class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                for="grid-email"
+                for="email"
               >
                 Email
               </label>
               <input
-                id="grid-email"
+                name="email"
                 type="email"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 placeholder="Email"
@@ -42,7 +63,7 @@
                 Password
               </label>
               <input
-                id="grid-password"
+                name="password"
                 type="password"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 placeholder="Password"
@@ -54,6 +75,7 @@
               <button
                 class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
                 type="button"
+                on:click={submit}
               >
                 Sign In
               </button>

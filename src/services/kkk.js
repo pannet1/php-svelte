@@ -42,9 +42,18 @@ export const getMember = async (id) => {
 };
 
 // Method to add address to the prospect
-export const postAddr = async (postData) => {
+export const postProfile = async (postData) => {
   try {
-    const response = await Api.post("/addr", postData);
+    const response = await Api.post("/profile", postData);
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const postAuthLogin = async (postData) => {
+  try {
+    const response = await Api.post("/auth/login", postData);
     return response;
   } catch (error) {
     console.error(error);
