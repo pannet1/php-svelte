@@ -27,4 +27,33 @@ final class Auth extends Main {
           \View\JSON::instance()->error($msg);
          }     
     }
+
+    public function activate(\Base $f3, array $args = []) {
+        $email  = $f3->get('GET.email');
+        $token  = $f3->get('GET.token');        
+        if (!password_verify($email, $token))
+            $msg = 'email is invalid'; 
+        else {
+            $member = new \model\Member();  
+            $member->load(['email = ? AND token = ?', $email, $token ]);            
+            if($member->dry())
+                $msg = 'email not found';
+            else
+             {
+                $joined = new \DateTime($member->join_date);
+                $now    = new \DateTime();
+                if($joined->diff($now)->days > 1) 
+                    $msg = 'The validation link is expired. Signup Again';
+                    else {
+                        $member->status_id = 2;    
+                        $member->save();
+                        echo "account activated";
+                    }                                              
+            }            
+        }                   
+        if(isset($msg))
+            echo $msg;      
+    }
+
+
 }

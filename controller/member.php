@@ -41,16 +41,23 @@ final class Member extends Main {
 			$member->people_id = $people->id;						
 			$member->pass = password_hash($f3->get('POST.password'), PASSWORD_DEFAULT);
 			$member->token = password_hash($f3->get('POST.email'),PASSWORD_DEFAULT);			
-			$member->save();            
-            \View\JSON::instance()->serve("success"); 		
+			$member->save();    				        
+			$mbox = new \model\Mbox();
+			$mbox->recepient = $f3->get('POST.email');		
+			$mbox->sub       = "Activate Account";
+			$body            = "You received this mail because you registered for ";
+			$body           .=  $f3->get('WEB');
+			$body           .= " service. click on the below link to confirm your email id and activate the account. \n";
+			$body           .=  $f3->get('URI')."/auth/activate?email=".$member->email."&token=".$member->token;
+			$mbox->body      = $body;            
+			$mbox->save();
+			\View\JSON::instance()->serve("success"); 	
          } else {
 			$msg = $f3->get('msg');
 			if(!$msg)
 				$msg = "some strange error occured";
 			\View\JSON::instance()->error($msg);
 		 }
-
-
 	}	
 
 
