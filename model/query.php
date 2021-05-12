@@ -7,9 +7,20 @@ class Query extends \DB\SQL\Mapper {
         parent::__construct($db, $table);
 	}
 
-    public function get_all(string $sql = '') {		
+    public function get_all(string $sql) {		
        return $this->db->exec($sql);
     }	
+
+	public function update_col_val(array $arr, $fld, $val) {
+		$ret = false;
+		$this->load($arr);
+		if(!$this->dry()) {
+			$this->$fld = $val;
+			$this->update();
+			$ret = true;
+		}		
+		return $ret;		
+	}
 
 	public function paging() {
          // PAGINATION BEGIN		

@@ -47,7 +47,8 @@ final class Member extends Main {
 			$mbox->sub       = "Activate Account";
 			$body            = "You received this mail because you registered for ";
 			$body           .=  $f3->get('WEB');
-			$body           .= " service. click on the below link to confirm your email id and activate the account. \n";
+			$body           .= " service. click on the below link to confirm your email ";
+			$body           .= "and activate the account. \n";
 			$body           .=  $f3->get('URI')."/auth/activate?email=".$member->email."&token=".$member->token;
 			$mbox->body      = $body;            
 			$mbox->save();

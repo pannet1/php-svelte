@@ -15,10 +15,26 @@ final class Master extends Main {
 	}	
 
 	public function mbox(\Base $f3, array $args = []) {				
-		$sql = "SELECT recepient, sub, body ";
-		$sql .= "FROM mbox WHERE timestamp < now() LIMIT 1";
-		$data = $this->mapper->get_all($sql);
-		
+		$sql = "SELECT id, recepient, sub, body ";
+		$sql .= "FROM mbox WHERE timestamp < now() ";
+		$sql .= "AND is_sent=0 LIMIT 1";
+		$mbox = new \model\Query($f3->get('db'), 'mbox');		
+		$arr = $mbox->get_all($sql);
+		if($arr[0]['id']>0)
+			{	
+			$return = \Utils\Postoffice::instance()->mailto(
+				$arr[0]['recepient'],
+				$arr[0]['sub'],
+				$arr[0]['body']
+			);					
+			if($return) 
+				{				
+				$id = $arr[0]['id'];				
+				$return = $mbox->update_col_val(array('id=?', $id), 'is_sent', 1);				
+				}				
+			} 				
+		$mbox->reset();
 	}
+
 
 }
