@@ -35,7 +35,7 @@ final class Member extends Main {
 		$member->email  = $f3->get('POST.email');		
 		$member->pass = $f3->get('POST.password');
 		$member->type_id = 1;
-		$one = $this->validation->validateCortexMapper($member);					
+		$one = $this->validation->validateCortexMapper($member, 1);					
 		 if($many && $one) {
 			$people->save();
 			$member->people_id = $people->id;						
@@ -65,21 +65,40 @@ final class Member extends Main {
 	// GET module/@id ONE
 	public function get_one(\Base $f3, array $args = []) {	
 		$id = $args['id'];		
-        if(isset($id)) {
+		$valid = 0;
+        if(isset($id)) {		   
            $sql  = "SELECT member.id, member.join_date, member.people_id, member.ref1, member.ref2, member.notes, member.type_id, member.notes, member.email, ";  
            $sql .= "people.first, people.middle, people.last "; 
            $sql .= "FROM member, people ";                                    
            $sql .= "WHERE member.id=$id ";
            $sql .= "AND member.people_id=people.id ";
-           $dat1 = $this->mapper->get_all($sql);                              
+           $dat1 = $this->mapper->get_all($sql);      			   
            $people_id = $dat1['0']['people_id'];
-           $dat2 = [];
-           $sql  = "SELECT addr.addr1, addr.addr2, addr.city, addr.postal_code ";
-           $sql .= "FROM addr ";
-           $sql .= "WHERE addr.people_id=$people_id";              
-           $dat2 = $this->mapper->get_all($sql);                              
-           $data = array_merge_recursive($dat1[0], $dat2[0]);
-		   \View\JSON::instance()->serve($data);
+		   if($people_id>0) {		   
+				$valid = 1;
+				$sql  = "SELECT addr.addr1, addr.addr2, addr.city, addr.postal_code ";
+				$sql .= "FROM addr ";
+				$sql .= "WHERE addr.people_id=$people_id";              
+				$dat2 = $this->mapper->get_all($sql);                              
+				if(is_array($dat2[0])) 
+						$valid = 2;				
+				else {					
+					$dat2[0] = array(
+						'addr1' => '',
+						'addr2' => '',
+						'city' => '',
+						'postal_code' => ''
+					);
+				}
+				$data = array_merge_recursive($dat1[0], $dat2[0]);
+				\View\JSON::instance()->serve($data);
+					
+		   }
+		   
+		   if($valid==0)
+		   		\View\JSON::instance()->error("no data found");				           
+		   
 		}			
 	}	
+
 }

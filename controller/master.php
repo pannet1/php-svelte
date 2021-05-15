@@ -36,5 +36,18 @@ final class Master extends Main {
 		$mbox->reset();
 	}
 
+	public function mod_val_by_id(\Base $f3, array $args = []) {		
+		$mod       = $f3->get('GET.mod');
+		$id        = $f3->get('GET.id');
+        $col       = $f3->get('GET.col');
+        $val       = $f3->get('GET.val');        
+		$member    = new \model\Query($f3->get('db'), $mod);		
+		$return    = $member->update_col_val(array('id=?', $id), $col, $val);       
+		if($return)
+			\View\JSON::instance()->serve("value updated"); 
+		else	               
+			\View\JSON::instance()->error("something was wrong"); 
+    }
+
 
 }

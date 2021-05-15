@@ -52,18 +52,7 @@
       </ul>
 
       <ul class="flex flex-col lg:flex-row list-none lg:ml-auto">
-
-        <li class="flex items-center">
-          <a
-            use:link          
-            class="hover:text-blueGray-500 text-blueGray-700 px-3 py-2 flex items-center text-xs uppercase font-bold"
-            href="/auth/test"
-          >  
-          <i class="text-blueGray-400 fas fa-lock text-lg leading-lg mr-2" />          
-            Test
-          </a>
-        </li>
-        
+                
         <li class="flex items-center">
           <a
             use:link          

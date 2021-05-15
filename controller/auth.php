@@ -21,7 +21,13 @@ final class Auth extends Main {
         }
             
         if($one && $two ) {                              
-            \View\JSON::instance()->serve("success");                
+            $data =  array(
+                'status' => true,
+                'id'=> $member->id,
+                'hash'=> $member->pass,
+                'error' => null,
+            );
+            \View\JSON::instance()->serve($data);                
          }  else {
                 $msg = $f3->get('msg');
           \View\JSON::instance()->error($msg);
@@ -54,6 +60,6 @@ final class Auth extends Main {
         if(isset($msg))
             echo $msg;      
     }
-
+    
 
 }

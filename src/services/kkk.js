@@ -59,3 +59,12 @@ export const postAuthLogin = async (postData) => {
     console.error(error);
   }
 };
+
+export const modValById = async (args) => {
+  try {
+    const response = await Api.get("/mod?"+args);
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
+};

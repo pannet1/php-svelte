@@ -2,7 +2,7 @@
   import TableTitle from "components/Cards/TableTitle.svelte";  
   import TableHead from "components/Cards/TableHead.svelte";
   import TableData from "components/Cards/TableData.svelte";  
-  import TableDropdown from "components/Dropdowns/TableDropdown.svelte";  
+  import MemberDropdown from "components/Dropdowns/MemberDropdown.svelte";  
 
   import { onMount } from "svelte";
   import { getMemberList } from "../../services/kkk";
@@ -15,7 +15,6 @@
     const res = await getMemberList();
     members = res;        
   });
-
  
   // can be one of light or dark
   let color = "light";
@@ -34,7 +33,7 @@
               <TableHead>Name</TableHead>
               <TableHead>Email</TableHead>       
               <TableHead>Join Date</TableHead>
-              <TableHead>Status</TableHead>                
+              <TableHead>Status</TableHead>                              
               <TableHead>Action</TableHead>                
             </tr>       
           </thead>
@@ -47,16 +46,16 @@
               <TableData>{ member.email}</TableData>      
               <TableData>{ ts2dt(member.join_date) }</TableData>    
               <TableData>
-                {#if member.status_id == "0" }
-                <i class="fas fa-circle mr-2 text-red-500"></i>inactive
-                {:else}
+                {#if member.status_id >= 2 }                
                 <i class="fas fa-circle mr-2 text-teal-500"></i>active
+                {:else}
+                <i class="fas fa-circle mr-2 text-red-500"></i>inactive                
                 {/if}
-              </TableData>        
+              </TableData>                  
               <td
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right"
               > 
-              <TableDropdown />
+              <MemberDropdown />
               </td>
             </tr>
             {/each}          
