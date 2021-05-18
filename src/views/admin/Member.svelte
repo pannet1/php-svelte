@@ -4,6 +4,7 @@
   import TableData from "components/Cards/TableData.svelte";  
   import TableDropdown from "components/Dropdowns/TableDropdown.svelte";  
 
+  import { navigate } from "svelte-routing";   
   import { onMount } from "svelte";
   import { modValById, getMemberList } from "../../services/kkk";  
   import { ts2dt} from "../../services/utils";
@@ -16,13 +17,12 @@
     members = res;        
   });
 
-  const toggle = (e, val, id) => {    
+    const toggle = async (e, val, id) => {    
     e.preventDefault();   
     const args = 'name=member&id='+id+'&col=status_id&val='+val    
-    const res  =  modValById(args);
-    //TODO
-    // CONSOLE LOGS BEFORE PROMISE IS RETURNED
-    console.log(res.data);    
+    const res  =  await modValById(args);
+    if(res.status==true)
+      navigate("/", { replace: true }) 
   }
 
   // can be one of light or dark
