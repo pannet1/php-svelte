@@ -4,6 +4,7 @@ namespace controller;
 final class Committee extends Main {	
 
 	public function beforeroute(\Base $f3, array $args = []){										        		
+		$f3->title = ucfirst($args['module']);	
 		$this->mapper = new \Model\Query($f3->get('db'), $args['module']);		
 	}	
 	

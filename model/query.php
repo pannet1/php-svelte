@@ -3,7 +3,7 @@ namespace model;
 
 class Query extends \DB\SQL\Mapper {
 
-    public function __construct(\DB\SQL $db, string $table='') {
+    public function __construct(\DB\SQL $db, string $table='') {		
         parent::__construct($db, $table);
 	}
 
@@ -21,6 +21,15 @@ class Query extends \DB\SQL\Mapper {
 		}		
 		return $ret;		
 	}
+
+	public function find_val_by_id(int $id, string $col) {		
+		$arr = $this->find(['id=?',$id ]);					
+		if($arr[0][$col])
+			return $arr[0][$col];		
+		else
+			return null;
+	}
+
 
 	public function paging() {
          // PAGINATION BEGIN		

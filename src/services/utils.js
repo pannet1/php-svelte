@@ -5,7 +5,6 @@
           "/"+date.getFullYear());    
   }
  
- 
  export const fd2json = (fd) => {
     let obj = {};
     for (let key of fd.keys()) {

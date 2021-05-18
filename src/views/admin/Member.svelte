@@ -2,10 +2,10 @@
   import TableTitle from "components/Cards/TableTitle.svelte";  
   import TableHead from "components/Cards/TableHead.svelte";
   import TableData from "components/Cards/TableData.svelte";  
-  import MemberDropdown from "components/Dropdowns/MemberDropdown.svelte";  
+  import TableDropdown from "components/Dropdowns/TableDropdown.svelte";  
 
   import { onMount } from "svelte";
-  import { getMemberList } from "../../services/kkk";
+  import { modValById, getMemberList } from "../../services/kkk";  
   import { ts2dt} from "../../services/utils";
 
   let members;
@@ -15,7 +15,16 @@
     const res = await getMemberList();
     members = res;        
   });
- 
+
+  const toggle = (e, val, id) => {    
+    e.preventDefault();   
+    const args = 'name=member&id='+id+'&col=status_id&val='+val    
+    const res  =  modValById(args);
+    //TODO
+    // CONSOLE LOGS BEFORE PROMISE IS RETURNED
+    console.log(res.data);    
+  }
+
   // can be one of light or dark
   let color = "light";
 </script>
@@ -55,7 +64,22 @@
               <td
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right"
               > 
-              <MemberDropdown />
+              <TableDropdown>
+                <a
+                href="#pablo" 
+                on:click="{ (e)=> toggle(e, 3, member.id) }"
+                class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
+                >
+                  Approve
+                </a>
+               <a
+                href="#pablo" 
+                on:click="{ (e)=> toggle(e, 0, member.id) }"
+                class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
+              >
+                  Reject
+              </a>                      
+              </TableDropdown>
               </td>
             </tr>
             {/each}          
