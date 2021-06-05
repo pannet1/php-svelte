@@ -68,7 +68,7 @@ final class Insecure extends Main {
 					$body           .=  $f3->get('WEB')." ";
 					$body           .= "membershp request is accepted.  \n";
 					$body           .= "Please complete the payment process by clicking on the link below.";
-					$body           .=  $f3->get('URI')."/fakeuri";
+					$body           .=  $f3->get('URI')."/pg?id=".$id;
 					$mbox->body      = $body;            
 					$mbox->save();								
 				} else { $msg = "unable to find email for that member"; }
@@ -97,6 +97,47 @@ final class Insecure extends Main {
 			\View\JSON::instance()->error($msg); 
 		else 
 			\View\JSON::instance()->serve("success"); 
+    }
+
+
+    public function pg(\Base $f3, array $args = []) {		
+        $member_id = $f3->get('GET.id');
+        
+        if($member_id) {        
+
+        $html = "<a href='/pg?id=".$member_id."&sub=1'>subscribe</a>";
+        $html .= " | ";
+        $html .= "<a href='/'>home</a>";
+        $sql = "SELECT id, ts_fm, ts_to FROM subscription ";
+        $sql .="WHERE member_id='$member_id' ";
+        $sql .="ORDER BY id DESC ";
+        $sql .="LIMIT 5";
+        $mpr = new \model\Query($f3->get('db'), 'subscription');
+        $arr = $mpr->get_all($sql);
+    
+        if(is_array($arr[0]))
+            $html .= \Services::instance()->build_table($arr);
+
+         if($f3->get('GET.sub')==1) {
+            $s = new \model\Subscription();
+            $s->member_id = $member_id;
+            if(is_array($arr[0])) {
+                $s->ts_fm = $arr[0]['ts_to'];
+                $now      = new \DateTime($arr[0]['ts_to']);                
+                $the      = $now->add(new \DateInterval('P1Y'));  
+                $s->ts_to = $the->format($f3->get('TSFMT'));
+            } else {
+                $now =  new \DateTime('NOW');
+                $s->ts_fm = $now->format($f3->get('TSFMT'));
+                $the = $now->add(new \DateInterval('P1Y'));
+                $s->ts_to = $the->format($f3->get('TSFMT'));
+            }
+            $s->save();
+            $f3->reroute("/pg?id=$member_id");
+         }
+        echo '<br>';
+        echo $html;
+        }
     }
 	
 }

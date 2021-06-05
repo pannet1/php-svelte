@@ -22,7 +22,7 @@
     const args = 'name=member&id='+id+'&col=status_id&val='+val    
     const res  =  await modValById(args);
     if(res.status==true)
-      navigate("/", { replace: true }) 
+      navigate("/admin/dashboard", { replace: true }) 
   }
 
   // can be one of light or dark
