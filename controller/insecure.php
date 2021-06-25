@@ -62,7 +62,7 @@ final class Insecure extends Main {
 				$email = $member->find_val_by_id($id, 'email');
 				if($email) {
 					$mbox = new \model\Mbox();				
-					$mbox->recepient = $f3->get('POST.email');		
+					$mbox->recepient = $email;		
 					$mbox->sub       = "Membership request accepted";
 					$body            = "We are happy to inform you that your ";
 					$body           .=  $f3->get('WEB')." ";
@@ -70,16 +70,18 @@ final class Insecure extends Main {
 					$body           .= "Please complete the payment process by clicking on the link below.";
 					$body           .=  $f3->get('URI')."/pg?id=".$id;
 					$mbox->body      = $body;            
-					$mbox->save();								
-				} else { $msg = "unable to find email for that member"; }
+                    $mbox->save();								
+                } else {
+                    $msg = "unable to find email for that member"; }
 			}
 
+            // membership rejected
 			if($name=='member' && $col == 'status_id' && $val == 0) {
 				$member = new \model\Query($f3->get('db'), $name);
 				$email = $member->find_val_by_id($id, 'email');
 				if($email) {
 					$mbox = new \model\Mbox();				
-					$mbox->recepient = $f3->get('POST.email');		
+					$mbox->recepient = $email;		
 					$mbox->sub       = "Membership request declined";
 					$body            = "We regret to inform you that your ";
 					$body           .=  $f3->get('WEB')." ";

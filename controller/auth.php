@@ -17,7 +17,7 @@ final class Auth extends Main {
         if($one) {
         $member->load(['email = ?',$f3->get('POST.email') ]);            
         password_verify($f3->get('POST.password'), $member->pass) ?
-            $two = true: $f3->set('msg', 'username or password is wrong');
+        $two = true: $f3->set('msg', 'username or password is wrong');
         }
             
         if($one && $two ) {                              
@@ -63,3 +63,4 @@ final class Auth extends Main {
     
 
 }
+
